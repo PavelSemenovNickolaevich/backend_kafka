@@ -1,0 +1,10 @@
+io/fraud/kafka/messages/DealMessage.java
+ io.fraud.kafka.messages.DealMessage
+io/fraud/kafka/producer/KafkaMessageProducer.java
+ io.fraud.kafka.producer.KafkaMessageProducer
+io/fraud/kafka/KafkaRecord.java
+ io.fraud.kafka.KafkaRecord
+io/fraud/kafka/KafkaService.java
+ io.fraud.kafka.KafkaService
+io/fraud/kafka/consumer/KafkaMessageConsumer.java
+ io.fraud.kafka.consumer.KafkaMessageConsumer
