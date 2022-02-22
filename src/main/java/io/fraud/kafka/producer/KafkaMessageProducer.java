@@ -40,10 +40,9 @@ public class KafkaMessageProducer {
 
     @SneakyThrows
     public RecordMetadata send(String topic, String message) {
-        ProducerRecord<String, String> record = new ProducerRecord<>(
-                topic, message);
+        ProducerRecord<String, String> record = new ProducerRecord<>(topic, message);
 //        try {
-        return kafkaProducer.send(record).get();
+            return kafkaProducer.send(record).get();
 //        } catch (Exception e) {
 //            throw new RuntimeException(e);
 //        }

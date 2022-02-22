@@ -6,15 +6,15 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 
 public class KafkaService {
     private final KafkaMessageProducer kafkaMessageProducer;
+    private final KafkaMessageConsumer messageConsumer;
 
     public KafkaMessageConsumer getMessageConsumer() {
         return messageConsumer;
     }
 
-    private final KafkaMessageConsumer messageConsumer;
-
     public KafkaService(String server) {
         this.kafkaMessageProducer = new KafkaMessageProducer(server);
+        this.kafkaMessageProducer.createProducer();
         this.messageConsumer = new KafkaMessageConsumer(server);
     }
 
@@ -23,7 +23,7 @@ public class KafkaService {
     }
 
     public RecordMetadata send(String message) {
-        return send("T", message);
+        return send("test", message);
     }
 
     public void subscribe(String topic) {

@@ -26,12 +26,14 @@ public class KafkaMessageConsumer {
 
     private final Collection<KafkaRecord> receivedRecords = new ArrayList<>();
 
+    //ожидания по времени
     public Collection<KafkaRecord> waitForMessage() {
         Awaitility.await().atMost(30, TimeUnit.SECONDS)
                 .until(() -> consume().size() > 0);
         return getReceivedRecords();
     }
 
+    //ожидание до тех пор пока consumer не получит сообщение
     public KafkaRecord waitForMessage(String message) {
         Awaitility.await().atMost(20, TimeUnit.SECONDS)
                 .until(() -> consume().stream().anyMatch(it -> it.hasSource(message)));
@@ -50,7 +52,7 @@ public class KafkaMessageConsumer {
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
         props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000");
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-        //  props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "30000");
+        props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "30000");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         return props;

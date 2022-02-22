@@ -1,6 +1,5 @@
 package io.fraud.kafka;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -19,8 +18,8 @@ public class KafkaRecord {
     }
 
     @SneakyThrows
-    public  <T> T valueAs(Class<T> tClass) {
-            return objectMapper.readValue(record.value(), tClass);
+    public <T> T valueAs(Class<T> tClass) {
+        return objectMapper.readValue(record.value(), tClass);
     }
 
 }
