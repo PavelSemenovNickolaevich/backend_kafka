@@ -15,11 +15,7 @@ import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BackendTests {
-
-  //  private final KafkaService kafkaService = new KafkaService("localhost:65220");
-    private final KafkaService kafkaService = new KafkaService("localhost:9092");
-
+public class BackendTests extends BaseTest{
  //to do записать попробоваль на удаленный адрес
     @Test
     void testCanWriteMessageToQueingTransaction() {

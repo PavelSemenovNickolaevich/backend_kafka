@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.fraud.kafka.consumer.KafkaMessageConsumer;
 import io.fraud.kafka.producer.KafkaMessageProducer;
 import lombok.SneakyThrows;
+import org.aeonbits.owner.ConfigFactory;
 import org.apache.kafka.clients.producer.RecordMetadata;
 
 public class KafkaService {
@@ -15,10 +16,11 @@ public class KafkaService {
         return messageConsumer;
     }
 
-    public KafkaService(String server) {
-        this.kafkaMessageProducer = new KafkaMessageProducer(server);
+    public KafkaService() {
+        ProjectConfig projectConfig = ConfigFactory.create(ProjectConfig.class);
+        this.kafkaMessageProducer = new KafkaMessageProducer(projectConfig.kafkaBrokers());
         this.kafkaMessageProducer.createProducer();
-        this.messageConsumer = new KafkaMessageConsumer(server);
+        this.messageConsumer = new KafkaMessageConsumer(projectConfig.kafkaBrokers());
     }
 
     public RecordMetadata send(String topic, String message) {
