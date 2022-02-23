@@ -21,4 +21,9 @@ public interface ProjectConfig extends Config {
     String dbPassword();
     @Key("${app}.kafkaBrokers")
     String kafkaBrokers();
+
+    String legitTopic();
+    String fraudTopic();
+
+    String queuingTopic();
 }

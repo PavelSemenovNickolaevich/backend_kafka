@@ -11,13 +11,13 @@ public class KafkaService {
     private final KafkaMessageProducer kafkaMessageProducer;
     private final KafkaMessageConsumer messageConsumer;
     private final ObjectMapper objectMapper = new ObjectMapper();
+    ProjectConfig projectConfig = ConfigFactory.create(ProjectConfig.class);
 
     public KafkaMessageConsumer getMessageConsumer() {
         return messageConsumer;
     }
 
     public KafkaService() {
-        ProjectConfig projectConfig = ConfigFactory.create(ProjectConfig.class);
         this.kafkaMessageProducer = new KafkaMessageProducer(projectConfig.kafkaBrokers());
         this.kafkaMessageProducer.createProducer();
         this.messageConsumer = new KafkaMessageConsumer(projectConfig.kafkaBrokers());
@@ -32,8 +32,22 @@ public class KafkaService {
     }
 
     @SneakyThrows
+    public RecordMetadata send(Object message) {
+        return send(projectConfig.queuingTopic(), objectMapper.writeValueAsString(message));
+    }
+
+
+    @SneakyThrows
     public RecordMetadata send(String topic, Object message) {
-        return send(topic,  objectMapper.writeValueAsString(message));
+        return send(topic, objectMapper.writeValueAsString(message));
+    }
+
+    public void subscribeLegit() {
+        subscribe(projectConfig.legitTopic());
+    }
+
+    public void subscribeFraud() {
+        subscribe(projectConfig.fraudTopic());
     }
 
     public void subscribe(String topic) {

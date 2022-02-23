@@ -55,9 +55,9 @@ public class BackendTests extends BaseTest{
         generatorMessage.setTarget(RandomStringUtils.randomAlphabetic(10));
 
 
-        kafkaService.subscribe("streaming.transactions.fraud");
+        kafkaService.subscribeLegit();
       //  kafkaService.send("queuing.transactions", "{\"date\": \"01/07/2021 20:01:07\", \"source\": \"Java12\", \"target\": \"python\", \"amount\": 900.0, \"currency\": \"EUR\"}");
-        kafkaService.send("queuing.transactions", generatorMessage);
+        kafkaService.send(generatorMessage);
        // KafkaRecord receivedRecords = kafkaService.waitForMessage("Java12");
 
         DealMessage dealMessage = kafkaService.waitForMessage(generatorMessage.getSource()).valueAs(DealMessage.class);
@@ -77,9 +77,9 @@ public class BackendTests extends BaseTest{
         generatorMessage.setTarget(RandomStringUtils.randomAlphabetic(10));
 
 
-        kafkaService.subscribe("streaming.transactions.fraud");
+        kafkaService.subscribeFraud();
         //  kafkaService.send("queuing.transactions", "{\"date\": \"01/07/2021 20:01:07\", \"source\": \"Java12\", \"target\": \"python\", \"amount\": 900.0, \"currency\": \"EUR\"}");
-        kafkaService.send("queuing.transactions", generatorMessage);
+        kafkaService.send(generatorMessage);
         // KafkaRecord receivedRecords = kafkaService.waitForMessage("Java12");
 
         DealMessage dealMessage = kafkaService.waitForMessage(generatorMessage.getSource()).valueAs(DealMessage.class);
