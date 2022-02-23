@@ -1,22 +1,19 @@
 package io.fraud.kafka.messages;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class DealMessage {
+public class GeneratorMessage {
 
     @JsonProperty("date")
     private String date;
 
     @JsonProperty("amount")
-    private String amount;
+    private int amount;
 
     @JsonProperty("currency")
     private String currency;
@@ -26,11 +23,4 @@ public class DealMessage {
 
     @JsonProperty("target")
     private String target;
-
-    private Double rate;
-
-    @JsonProperty("base_currency")
-    private String baseCurrency;
-
-
 }
