@@ -1,22 +1,19 @@
 package io.fraud.tests;
 
 import io.fraud.kafka.KafkaRecord;
-import io.fraud.kafka.KafkaService;
 import io.fraud.kafka.consumer.KafkaMessageConsumer;
 import io.fraud.kafka.messages.DealMessage;
 import io.fraud.kafka.messages.GeneratorMessage;
 import io.fraud.kafka.producer.KafkaMessageProducer;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.assertj.core.internal.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Test;
-
 
 import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BackendTests extends BaseTest{
- //to do записать попробоваль на удаленный адрес
+public class BackendTests extends BaseTest {
+    //to do записать попробоваль на удаленный адрес
     @Test
     void testCanWriteMessageToQueingTransaction() {
         KafkaMessageProducer kafkaMessageProducer = new KafkaMessageProducer("localhost:9092");
@@ -56,30 +53,31 @@ public class BackendTests extends BaseTest{
 
 
         kafkaService.subscribeLegit();
-      //  kafkaService.send("queuing.transactions", "{\"date\": \"01/07/2021 20:01:07\", \"source\": \"Java12\", \"target\": \"python\", \"amount\": 900.0, \"currency\": \"EUR\"}");
+        //  kafkaService.send("queuing.transactions", "{\"date\": \"01/07/2021 20:01:07\", \"source\": \"Java12\", \"target\": \"python\", \"amount\": 900.0, \"currency\": \"EUR\"}");
         kafkaService.send(generatorMessage);
-       // KafkaRecord receivedRecords = kafkaService.waitForMessage("Java12");
+        // KafkaRecord receivedRecords = kafkaService.waitForMessage("Java12");
 
         DealMessage dealMessage = kafkaService.waitForMessage(generatorMessage.getSource()).valueAs(DealMessage.class);
 
-        assertThat(dealMessage.getAmount()).isEqualTo(900.0);
+        assertThat(dealMessage.getAmount()).isEqualTo(generatorMessage.getAmount());
         assertThat(dealMessage.getBaseCurrency()).isEqualTo("USD");
 
     }
 
     @Test
     void testApplicationCanProcessFraudMessage() {
-        GeneratorMessage generatorMessage = new GeneratorMessage();
-        generatorMessage.setDate(new Date().toString());
-        generatorMessage.setAmount(2000);
-        generatorMessage.setCurrency("EUR");
-        generatorMessage.setSource(RandomStringUtils.randomAlphabetic(10));
-        generatorMessage.setTarget(RandomStringUtils.randomAlphabetic(10));
+//        GeneratorMessage generatorMessage = new GeneratorMessage();
+//        generatorMessage.setDate(new Date().toString());
+//        generatorMessage.setAmount(2000);
+//        generatorMessage.setCurrency("EUR");
+//        generatorMessage.setSource(RandomStringUtils.randomAlphabetic(10));
+//        generatorMessage.setTarget(RandomStringUtils.randomAlphabetic(10));
 
 
         kafkaService.subscribeFraud();
         //  kafkaService.send("queuing.transactions", "{\"date\": \"01/07/2021 20:01:07\", \"source\": \"Java12\", \"target\": \"python\", \"amount\": 900.0, \"currency\": \"EUR\"}");
-        kafkaService.send(generatorMessage);
+        // kafkaService.send(generatorMessage);
+        GeneratorMessage generatorMessage = kafkaService.send();
         // KafkaRecord receivedRecords = kafkaService.waitForMessage("Java12");
 
         DealMessage dealMessage = kafkaService.waitForMessage(generatorMessage.getSource()).valueAs(DealMessage.class);
