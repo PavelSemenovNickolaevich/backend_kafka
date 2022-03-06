@@ -2,7 +2,6 @@ package io.fraud.kafka;
 
 
 import org.aeonbits.owner.Config;
-import org.aeonbits.owner.Config.Key;
 import org.aeonbits.owner.Config.Sources;
 
 
@@ -12,7 +11,7 @@ public interface ProjectConfig extends Config {
     @Key("${app}.dbHost")
     String dbHost();
     @Key("${app}.dbPort")
-    String dbPort();
+    int dbPort();
     @Key("${app}.dbName")
     String dbName();
     @Key("${app}.dbUser")

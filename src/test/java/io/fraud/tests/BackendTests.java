@@ -1,5 +1,6 @@
 package io.fraud.tests;
 
+import io.fraud.database.model.Deal;
 import io.fraud.kafka.KafkaRecord;
 import io.fraud.kafka.consumer.KafkaMessageConsumer;
 import io.fraud.kafka.messages.DealMessage;
@@ -9,6 +10,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -84,6 +86,18 @@ public class BackendTests extends BaseTest {
 
         assertThat(dealMessage.getAmount()).isEqualTo(2000);
         assertThat(dealMessage.getBaseCurrency()).isEqualTo("USD");
+
+    }
+
+    @Test
+    void testApplicationCanSaveFraudMessageToDataBase() {
+        Deal deal = dbService.findDealById(185);
+        List<Deal> dealList = dbService.findByCurrency("EUR");
+
+
+        assertThat(deal.getAmount()).isEqualTo(2000);
+
+        assertThat(dealList.size()).isEqualTo(5);
 
     }
 }
